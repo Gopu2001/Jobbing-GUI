@@ -138,7 +138,7 @@ for company, url in job_links:
     browser.get(url)
     time.sleep(0.2)
 
-    if 'hubspot' in url.lower():
+    if '__' in url.lower():
         browser.find_element(By.CLASS_NAME, 'sc-kkGfuU').click()
 
     html = browser.page_source
@@ -146,7 +146,7 @@ for company, url in job_links:
     sp = BeautifulSoup(html, 'html.parser')
 
     print(company + ': ', end = '')
-    if 'greenhouse' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('div', class_ = 'opening')
         print(len(sections), 'job opportunities!', end = '')
         for job in sections:
@@ -155,7 +155,7 @@ for company, url in job_links:
             loc = unicodedata.normalize('NFKD', job.span.string).strip()
             job_opps.append((company, title, link))
 
-    if 'ultipro' in url.lower():
+    if '__' in url.lower():
         while True:
             load_more = browser.find_element(By.CSS_SELECTOR, "[data-bind='visible: skip() + pageSize < totalCount() && totalCount() > 0']")
             if load_more.get_attribute('style') == '':
@@ -181,7 +181,7 @@ for company, url in job_links:
                 for new_place in jl_locs[1:]:
                     additional_job_location = new_place.string
 
-    if 'hubspot' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('a', class_='sc-bdVaJa bKWNxX')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -190,7 +190,7 @@ for company, url in job_links:
             link = '/'.join(url.split('/')[0:3]) + opp.get('href')
             job_opps.append((company, title, link))
 
-    if 'lever' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('div', class_='posting')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -199,7 +199,7 @@ for company, url in job_links:
             link = opp.find_all('a')[0].get('href')
             job_opps.append((company, title, link))
 
-    if 'tripactions' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('li', class_='posting')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -208,7 +208,7 @@ for company, url in job_links:
             link = '/'.join(url.split('/')[0:3]) + opp.find_all('a')[0].string
             job_opps.append((company, title, link))
 
-    if 'bird' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('div', class_='job-title')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -217,7 +217,7 @@ for company, url in job_links:
             link = opp.find_all('a')[0].get('href')
             job_opps.append((company, title, link))
 
-    if 'breezy' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('li', class_='position transition')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -226,7 +226,7 @@ for company, url in job_links:
             link = url + opp.find_all('a')[0].get('href')
             job_opps.append((company, title, link))
 
-    if 'scale' in url.lower():
+    if '__' in url.lower():
         sections = sp.find_all('li', class_ = 'Jobs_itemWrapper__3u3uA bg-white py-2 px-4 rounded-1 shadow-md hover:shadow-xl transition-shadow duration-250 ease-out')
         print(len(sections), 'job opportunities!', end = '')
         for opp in sections:
@@ -235,7 +235,7 @@ for company, url in job_links:
             link = '/'.join(url.split('/')[0:3]) + opp.find_all('a')[0].get('href')
             job_opps.append((company, title, link))
 
-    if 'activision' in url.lower():
+    if '__' in url.lower():
         job_count = 0
         while True:
             sp = BeautifulSoup(browser.page_source, 'html.parser')
@@ -255,7 +255,7 @@ for company, url in job_links:
                 break
         print(job_count, 'job opportunities!', end = '')
 
-    if 'coursera' in url.lower():
+    if '__' in url.lower():
         categories = browser.find_elements(By.CLASS_NAME, 'role')
         jobs = 0
         for cat_num in range(len(categories)):
@@ -274,7 +274,7 @@ for company, url in job_links:
             browser.implicitly_wait(10)
         print(jobs, 'job opportunities!', end = '')
 
-    if 'coinbase' in url.lower():
+    if '__' in url.lower():
         categories = browser.find_elements(By.CLASS_NAME, 'Department__Wrapper-sc-1n8uxi6-0.jItAmd')
         for category in categories:
             browser.execute_script('arguments[0].scrollIntoView(true);', category)
@@ -292,7 +292,7 @@ for company, url in job_links:
             link = opp.find_all('a')[0].get('href')
             job_opps.append((company, title, link))
 
-    if 'intuitive' in url.lower():
+    if '__' in url.lower():
         browser.find_element(By.CSS_SELECTOR, '.mat-select-arrow.ng-tns-c64-33').click()
         browser.implicitly_wait(10)
         browser.find_elements(By.TAG_NAME, 'mat-option')[3].click()
@@ -320,7 +320,7 @@ for company, url in job_links:
                 break
         print(jobs, 'job opportunities!', end = '')
 
-    if 'ttcportals' in url.lower():
+    if '__' in url.lower():
         opportunities = 0
         page_count = len(sp.find_all('a', href = lambda href: href and '/jobs/search?page=' in href)) // 2
         for page in range(page_count):
@@ -342,7 +342,7 @@ for company, url in job_links:
 
     while(True):
         try:
-            if 'docusign' in url.lower():
+            if '__' in url.lower():
                 categs = browser.find_elements(By.CLASS_NAME, 'careers-fpp')
                 times = len(categs)
                 before = len(job_opps)
