@@ -92,14 +92,14 @@ def company_jobs(company_name):
     clear_mem()
     minimum = False
 
-    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
     job_cursor = job_conn.cursor()
     command = f"select title, link from job_listings where company = '{company_name}' and title like '{q_string}' order by title"
     job_cursor.execute(command)
     job_opps = job_cursor.fetchall()
     job_cursor.close()
     job_conn.close()
-    
+
     for job in job_opps:
         job_button = tk.Button(under_frame, text = job[0], anchor = 'w', font = font, height = 2, width = 53, command = lambda link = job[1]: open_job_link(link))
         jobs.append(job_button)
@@ -133,7 +133,7 @@ def add_jobs(page_num = 0):
     right = tk.Button(under_frame, text = '>', font = font, width = 25, command = command)
     left.grid(row = 10, column = 0, columnspan = 1, sticky = tk.W)
     right.grid(row = 10, column = 1, columnspan = 1, sticky = tk.W)
-    
+
     row = 0
     for job_button in jobs[10*page_num : last]:
         job_button.grid(row = row, column = 0, columnspan = 2, sticky = tk.W)
@@ -150,11 +150,11 @@ def start():
     row = 0
     company_add_count = 0
 
-    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
     job_cursor = job_conn.cursor()
     job_cursor.execute('select distinct company from job_listings order by company')
     company_names_list = job_cursor.fetchall()
-    
+
     for company_name in company_names_list:
         company_add_count += 1
         command = f"select count(title) from job_listings where company = '{company_name[0]}' and title like '{q_string}'"
@@ -195,7 +195,7 @@ def add_companies(page_num = 0):
     right = tk.Button(under_frame, text = '>', font = font, width = 25, command = command)
     left.grid(row = 10, column = 0, sticky = tk.W)
     right.grid(row = 10, column = 1, sticky = tk.W)
-    
+
     row = 0
     col = 0
     for company_button in companies[20*page_num : last]:
@@ -218,6 +218,4 @@ if __name__ == '__main__':
     top.bind_all('<Control-Key-f>', lambda event : open_query())
     query_win.bind('<Escape>', close_query)
     start()
-    #button_canvas.bind_all('<Button-4>', lambda event: button_canvas.yview_scroll(-1, "units"))
-    #button_canvas.bind_all('<Button-5>', lambda event: button_canvas.yview_scroll( 1, 'units'))
     tk.mainloop()

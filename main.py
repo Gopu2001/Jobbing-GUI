@@ -10,13 +10,13 @@ cities dbo:
      |--city, state
 
 To access this database in sqlcmd, run:
-$ sqlcmd -S localhost -U SA -P 'Apno0227'
+$ sqlcmd -S localhost -U __ -P '__'
 > use cities
 > go
 '''
 import pyodbc
 
-conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=cities;UID=SA;PWD=Apno0227')
+conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=cities;UID=__;PWD=__')
 
 cursor = conn.cursor()
 
@@ -43,7 +43,7 @@ cities dbo:
      |--city, state
 
 To access this database in sqlcmd, run:
-$ sqlcmd -S localhost -U SA -P 'Apno0227'
+$ sqlcmd -S localhost -U __ -P '__'
 > use cities
 > go
 '''
@@ -53,7 +53,7 @@ cursor.execute("select count(*) from usa;")
 items = cursor.fetchone()[0]
 
 if items == 0:
-    pdf = open('/home/anmol/Public/WebScrape/500-cities-listed-by-state.pdf', 'rb')
+    pdf = open('500-cities-listed-by-state.pdf', 'rb')
     reader = pydf.PdfFileReader(pdf)
 
     text = ''
@@ -111,7 +111,7 @@ conn.close()
 # Part 3 #######################################################################
 '''
 Part 3 in this project accesses the spreadsheet at
-docs.google.com/spreadsheets/d/1057brcM4eALpCzIQWLOM3C6mvXfoAGp8n8XnYJFzbTc/ to
+docs.google.com/spreadsheets/d/__/ to
 populate the job_links list, which will hold the names of all companies in
 consideration for a job and their job page. To ensure the safety and security of
 this google spreadsheet, I have limited this spreadsheet to readonly for
@@ -126,7 +126,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
 scope = ['https://www.googleapis.com/auth/spreadsheets.readonly']
-spreadsheet_id = '1057brcM4eALpCzIQWLOM3C6mvXfoAGp8n8XnYJFzbTc'
+spreadsheet_id = '__'
 range_name = 'Sheet1!A2:C'
 
 creds = None
@@ -187,7 +187,7 @@ from bs4 import BeautifulSoup
 import time, sys, unicodedata
 from multiprocessing import Pool
 
-job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
 job_cursor = job_conn.cursor()
 
 try:
@@ -199,7 +199,7 @@ except:
 job_cursor.close()
 job_conn.close()
 
-job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
 job_cursor = job_conn.cursor()
 
 try:
@@ -212,9 +212,9 @@ job_cursor.close()
 job_conn.close()
 
 def switch():
-    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
     job_cursor = job_conn.cursor()
-    
+
     job_cursor.execute('drop table job_listings')
     job_conn.commit()
     job_cursor.execute("exec sp_rename 'dbo.to_rep', 'job_listings'")
@@ -236,7 +236,7 @@ def scrape(job_link):
     company, url = job_link
     company_count += 1
     browser = webdriver.Chrome(options=options)
-    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+    job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
     job_cursor = job_conn.cursor()
 
     browser.get(url)
@@ -642,7 +642,7 @@ p.map(scrape, job_links)
 p.terminate()
 p.join()
 
-job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=SA;PWD=Apno0227')
+job_conn = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};Server=localhost;Database=jobs;UID=__;PWD=__')
 job_cursor = job_conn.cursor()
 
 switch()
