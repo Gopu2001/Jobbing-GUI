@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Job Opportunities</title>
+    <script>
+      var openJobs = 0;
+      function expandIFrame(iframeName, link) {
+        var ifr = document.getElementsByName(iframeName)[0];
+        var newTabBTN = document.getElementsByName(iframeName + "-button")[0];
+        if(ifr.style.display != "none") {
+          ifr.height = "0";
+          ifr.width = "0";
+          ifr.src = "";
+          ifr.style.display = "none";
+          newTabBTN.style.display = "none";
+          newTabBTN.innerHTML = "";
+          openJobs -= 1;
+        } else {
+          ifr.height = "500";
+          ifr.width = "100%";
+          ifr.src = link;
+          ifr.style.display = "";
+          newTabBTN.style.display = "";
+          newTabBTN.innerHTML = "<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAb1BMVEX///8AAABhYWHo6OgxMTGxsbG6urqenp729vZoaGjs7Ozu7u4yMjLFxcX7+/ujo6PW1taSkpKrq6t5eXmDg4OLi4tubm5BQUFSUlLMzMwhISHGxsZ0dHQNDQ2ZmZleXl4YGBgoKCjg4OB+fn4+Pj6sesykAAADZElEQVR4nO3d21bbMBBAUeVCEnJzLg0BmkCh/f9vbAldDVGV2h1r1ozMOc8IaS8egmNZDoGIiIiISmm07Xev7ejs63W042/jF+uFKLZ7A1bWq1BtE8LMeg3KTcKT9RKUq8LeegnKPQfrFWj3rfPCHsLyQ1h+CMvv8wmHs0Fts+do0Kp+zHQcjamm9YNW0Zh+k8UNa4TzJhfMt9GgWYMxN9GYmwZj4quC2yaLm9cIh01+SSycNhgjEU4lwrq/IcJTCFMhTIUwGUKEpxCmQpgKYTKECE8hTIUwFcJkCBGeQpgKYSqEyRAiPIUwFcJUCJOpCCV310b1Q/66u3bXZHEqd9fW49qqu3i1Vf2gdTRm32BM9aghdB1ChP5DiNB/ImH82eY6kXBrslRhIuHGZKnCRMKintEQCYt6kEgmDC8GSxUmFC7vTVYrSSj8db0XX6V4TSwMYfAwctgiy/Wh67Jc47suy/c0rkOI0H8IEfoPIUL/IUToP4QI/YcQYbs2b6fh7JtsNJFnKfzz8PnxVXEWQ+HiwzQPetPYCS9v50zU5rETXt443qrNYyacRBMttSYyEy6iiVZaE5kJJTv3RLkRqn0oIkQoDmG2ECIUhzBbCBGKQ5gthAjFIcwWQoTiEGYLIUJx8ctsCv2+dHHYD68UbzB/vPaD++1Xt8LVSy9PwzZf+SsKc75UaeFR+JoR2OsNHArzvrDm3p8wPiG+beJb/WrC3G9V2rgTHjILv3deeHAnjM8hadvanfAhs1C840bv0yLvE5cv4nXoCePNFu2Sb5pS/K9tlxH4JF+G5n/e8SWgvDYXj6pXT5Pdjwy8/brVpjftK+DlJN0yPmlic/UnW66AbzEQikOYLYQIxSHMFkKE4hBmCyFCcQizhRChOITZQohQHMJsuXlKtsV+kn9nJozPHm7yTgxRdk+rX55a+6w2j53wcjuK3rkRhqdGfNyPUulNY3nyx/n2k+bpJqantwzeD+Q/NHm3kDjrE3gGK1VesBfqhxCh/xAi9B9ChP5DiNB/CBH6D2H3hXPrBbau9m84G5TdrE7YvRCWH8LyQ1h+n0B4tF6BcsdQzitTZd2HsfUSlBuX9X5mQZMQKus1qHY6fKKkV1D/b7v3K6qcR+e46ng+j2m063evndrGMiIiIiLK3k+Kj23Hh54TUgAAAABJRU5ErkJggg==' width='40px' height='40px' />";
+          openJobs += 1;
+        }
+        var jobOpps = document.getElementsByClassName("job-opp");
+        var start = false;
+        for (var itemIndex = 0; itemIndex < jobOpps.length; itemIndex++) {
+          if(start) {
+            console.log(ifr.height);
+            var adder = 40;
+            if(ifr.style.display == "none") {
+              adder = 0;
+            }
+            jobOpps[itemIndex].style.marginTop = (parseInt(ifr.height)+adder) + "px";
+            console.log(jobOpps[itemIndex].style.marginTop);
+            start = false;
+          }
+          if(jobOpps[itemIndex].children[0].id == iframeName) {
+            start = true;
+          }
+        }
+      }
+    </script>
+    <style>
+
+.jobs {
+  z-index=1;
+  overflow-x: hidden;
+  bottom: 100px;
+}
+
+.job-opp {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  background-color: rgb(200,200,200);
+  height: 40px;
+  width: 80%;
+  margin: auto;
+  text-align: left;
+}
+
+    </style>
+  </head>
+  <body>
+    <a href="/">Go home</a>
+    <center><h1>Search for the job you want below to get started!</h1></center>
+    <div class="jobs">
+      {% for data in data %}
+        <div class="job-opp" style="margin-top: 0px">
+          <a target="{{data[0]}}" id="{{data[0]}}" onclick="expandIFrame('{{data[0]}}', '{{data[1]}}'); return false;"><u style="color:blue; cursor:pointer;">{{data[0]}}</u></a><br>
+          <p>
+            <button name="{{data[0]}}-button" class="new-tab" style="display: none; background-color: white; position: relative; top: 15px; left: 15px;" onclick="window.open('{{data[1]}}','_blank')"></button>
+            <iframe name="{{data[0]}}" width="0" height="0" style="display: none; background-color: white;"></iframe>
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

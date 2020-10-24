@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Job Opportunities</title>
+  </head>
+  <body>
+    <center><h1>Search for the job you want below to get started!</h1><center>
+    <div id="jobs">
+      {% for data in data %}
+        <a href="/companies/{{data[0]}}/">{{data[0]}}</a><br>
+      {% endfor %}
+    </div>
+  </body>
+</html>
